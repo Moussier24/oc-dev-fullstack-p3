@@ -1,6 +1,7 @@
 package com.ocangjava.portail.controller;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,15 +19,19 @@ import com.ocangjava.portail.dto.RentalResponse;
 import com.ocangjava.portail.dto.RentalsResponse;
 import com.ocangjava.portail.service.RentalService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/rentals")
 @RequiredArgsConstructor
+@Tag(name = "Location", description = "API de gestion des locations")
 public class RentalController {
 
     private final RentalService rentalService;
 
+    @Operation(summary = "Récupérer toutes les locations", description = "Retourne la liste de toutes les locations disponibles")
     @GetMapping
     public ResponseEntity<RentalsResponse> getAllRentals() {
         return ResponseEntity.ok(rentalService.getAllRentals());
