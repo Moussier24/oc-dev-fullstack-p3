@@ -33,10 +33,15 @@ public class AuthService {
     }
 
     public AuthResponse authenticate(AuthRequest request) {
-        // Implémentation de l'authentification
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new RuntimeException("Mot de passe incorrect");
+        }
+
         return AuthResponse.builder()
-                .token(jwtService.generateToken(userRepository.findByEmail(request.getEmail())
-                        .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"))))
+                .token(jwtService.generateToken(user))
                 .build();
     }
 }
