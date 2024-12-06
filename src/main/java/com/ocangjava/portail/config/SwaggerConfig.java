@@ -4,6 +4,9 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.media.Schema;
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
 import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +25,18 @@ public class SwaggerConfig {
                         .version("1.0")
                         .contact(new Contact()
                                 .name("OcangJava")
-                                .email("contact@ocangjava.com")));
+                                .email("contact@ocangjava.com")))
+                .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
+                .components(new Components()
+                        .addSecuritySchemes("Bearer Authentication", createSecurityScheme()));
+    }
+
+    private SecurityScheme createSecurityScheme() {
+        return new SecurityScheme()
+                .type(SecurityScheme.Type.HTTP)
+                .scheme("bearer")
+                .bearerFormat("JWT")
+                .description("Entrez votre token JWT avec le préfixe Bearer. Exemple: Bearer <votre_token>");
     }
 
     @Bean
