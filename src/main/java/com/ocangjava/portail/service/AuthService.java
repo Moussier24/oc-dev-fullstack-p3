@@ -34,8 +34,6 @@ public class AuthService {
 
     public AuthResponse authenticate(AuthRequest request) {
         // Implémentation de l'authentification
-        System.out.println("Authentification ********");
-        System.out.println(request.getEmail());
         return AuthResponse.builder()
                 .token(jwtService.generateToken(userRepository.findByEmail(request.getEmail())
                         .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"))))

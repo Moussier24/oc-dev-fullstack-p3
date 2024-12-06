@@ -51,5 +51,5 @@ mvn spring-boot:run
 
 1. Ouvrir un navigateur et accéder à l'URL suivante :
     ```
-    http://localhost:8080/swagger-ui.html
+    http://localhost:8080/swagger-ui/index.html
     ```
